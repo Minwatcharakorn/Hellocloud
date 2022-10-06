@@ -2,7 +2,9 @@ import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column,INTEGER,String,ForeignKey
 from sqlalchemy.orm import sessionmaker,relationship,backref
-import uuid 
+import uuid
+
+
 
 engine = sqlalchemy.create_engine('sqlite:///po.db')
 Base = declarative_base()
@@ -57,4 +59,56 @@ class Order(Base):
 
     def add_products(self , items):
         for product , qty , in items:
-            self.order_products.app
+            self.order_products.append(Order_Product(
+                order=self, product=product, quantity=qty))
+
+    def __int__(self, name):
+        self.id = uuid.uuid4().hex
+        self.name = name
+        self.product = []
+
+    def __repr__(self) :
+        return '<Order {}>'.format(self.name)
+
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
+
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    prod1 = Product(name='Oreo')
+    prod2 = Product(name='Hide and Seek')
+    prod3 = Product(name='Marie')
+    prod4 = Product(name='Good Day')
+
+    session.add_all([prod1, prod2, prod3, prod4])
+    session.commit()
+
+    order1 = Order(name='First Oder')
+    order2 = Order(name='Second Order')
+
+    order1.add_products([(prod1, 4) , (prod2, 5),(prod3, 4)])
+    order2.add_products([(prod2, 6), (prod1, 1), (prod3, 2), (prod4, 1)])
+
+    session.commit()
+
+    print("Products array of order1: ")
+    print(order1.products)
+    print("Products array of order2: ")
+    print(order2.products)
+    print("Products array of order1: ")
+    print(prod1.products)
+    print("Products array of order2: ")
+    print(prod2.products)
+    print("Products array of order3: ")
+    print(prod3.products)
+    print("Products array of order4: ")
+    print(prod4.products)
+
+    print("Order_Products Array of order1 : ")
+    print(order1.order1.order_products)
+
+    print("Order_Products Array of order1 : ")
+    print(order1.order1.order_products)
+
+    
