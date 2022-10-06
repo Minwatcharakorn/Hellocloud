@@ -1,9 +1,8 @@
-from unicodedata import name
 from flask import Flask,render_template,request,redirect,url_for  # ตอนนี้ run เป็น Local เซิฟ
 from flask_sqlalchemy import SQLAlchemy # มาทำเพื่อ DB model ใน columns
 from sqlalchemy import Column,Integer,String,Date # ประเภทของ columns มีอะไรบ้าง
 
-app =  Flask(name)
+app =  Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://webadmin:ONDcqt19301@10.104.9.231:5432/testdb' # define ของ databaseSQL ดึง database
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # ปิดข้อความโชว์ ถ้าจะเปิดให้เป็น True
 
@@ -33,7 +32,7 @@ def process():  # process ฟอร์มที่รับมาจาก sign
     db.session.commit()
     return redirect(url_for('index'))   # พอทำเสร็จก็จะกลับไปหน้า index
 
-if name == 'main':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
 # ORM = Online Reputation Management
 # WEB --> WEB SERVER -WSGI-> applicating instance --> ORM --> database(postgresSQL)
