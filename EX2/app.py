@@ -6,20 +6,15 @@ import datetime
 
 #Create engine 
 
-db_uri = 'sqlite///Ex.db'
+db_uri = 'sqlite///Ex2.sqlite3'
 engine =create_engine(db_uri,echo = False)
-
-
 
 #Create all table
 #Base.metdata.drop_all(engine)
 Base.metadata.create_all(engine)
 
-
-
 Session =sessionmaker(bind = engine)
 session = Session()
-
 
 user = Member(
     name = 'toddy',

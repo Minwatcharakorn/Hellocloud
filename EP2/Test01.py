@@ -14,8 +14,11 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-user1 = User(name = 'user1', fullname = 'Ed Jones',nickname = 'ed')
+user1 = User(name = 'user1', fullname = 'Ed Jones',nickname = 'Ed')
+user2 = User(name = 'user2', fullname = 'Ed Jones',nickname = 'Ted')
+user3 = User(name = 'user3', fullname = 'STEd Jones',nickname = 'STed')
+user4 = User(name = 'user4', fullname = 'WTEd Jones',nickname = 'WTed')
 
 
-session.add(user1)
+session.add_all([user1,user2,user3,user4])
 session.commit()

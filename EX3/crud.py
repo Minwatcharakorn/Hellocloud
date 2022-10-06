@@ -7,10 +7,10 @@ from sqlalchemy import create_engine
 import yaml 
 
 #เติมข้อมูลให้ครบก่อนใน configs.py !!!!#
-from configs    import DATABASE_URI , f_yam
+from configs    import DATEBASE_URI , f_yam
 from models2  import Base , Book
 
-engine = create_engine(DATABASE_URI)
+engine = create_engine(DATEBASE_URI)
 
 Session = sessionmaker(bind = engine)
 
@@ -20,13 +20,13 @@ def session_scope():
     session = Session()
     try: 
         yield session
-        session.commit(0)
+        session.commit()
     except Exception:
         session.rollback()
         print('Error')
         raise
     finally:
-        session.colse()
+        session.close()
 
 
 def recreate_database():
