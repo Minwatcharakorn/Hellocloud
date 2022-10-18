@@ -3,6 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import CHAR, VARCHAR, Column, Integer, ForeignKey
 from sqlalchemy.orm import sessionmaker
 
+
+
 engine = sqlalchemy.create_engine('sqlite:///Homework.sqlite3')
 Base = declarative_base()
 
@@ -162,3 +164,4 @@ session.add_all([Registration_table_1,Registration_table_2,Registration_table_3,
 
 
 session.commit()
+
