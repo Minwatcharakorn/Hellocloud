@@ -1,52 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initital-scale=1">
-        <!--the above  3 meta tags *must* come first in the head; any other head content must come *after* these tags-->
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <title> Guest Book </title>
-        <!-- Bootstrap core CSS -->
-        <link href = "{{ url_for ('static', filename='css/bootstrap.min.css') }}" rel = "stylesheet">
-        <!-- Bootstrap theme -->
-        <link href = "{{ url_for ('static' , filename='css/bootstrap-theme.min.css') }}" rel = "stylesheet ">
-        <!-- Custom styles for this template -->
-        <link href = "{{ url_for ('static' , filename='css/theme.css') }}" rel = "stylesheet">
-        </head>
-        <body>
-        <div class = "container theme-showcase " role = "main">
-            <div class="jumbotron">
-                <h1>Guest Book</h1>
-                <a type="button" class="btn-link" href="{{ url_for('sign') }}">Sign the Guest Book</a>
-            </div>
-            {% for r in result %}
-            <div class="page-header">
-                <h1>{{ r.Name }}</h1>
-            </div>
-            <div class="well">
-                <p>{{ r.comment }} </p>
-            </div>
-            {% endfor %}
-        </div> <!--/container-->
-    </body> 
-</html>   
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2><center>Home Work</center></h2>
+    <table border="1" width="100%" align="center">
+        <tr>
+            <th>student-id</th>
+            <th>student-f_name</th>
+            <th>student-l_name</th>
+            <th>subject-id</th>
+            <th>subject-name</th>
+            <th>grade</th>
+            <th>teacher-f_name</th>
+            <th>teacher-l_name</th>
+        </tr>
+        {% for row in test %}
+        <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>{{ row[4] }}</td>
+          <td>{{ row[5] }}</td>
+          <td>{{ row[6] }}</td>
+          <td>{{ row[7] }}</td>
+        </tr>
+      {% endfor %}
+      </table>
+</body>
 </html>
