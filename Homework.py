@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker , relationship , backref
 
 
 
-engine = sqlalchemy.create_engine('postgresql://webadmin:ONDcqt19301@node37013-watcharakorn.proen.app.ruk-com.cloud:11251/homework')
+engine = sqlalchemy.create_engine('postgresql://webadmin:ONDcqt19301@node37013-watcharakorn.proen.app.ruk-com.cloud:5432/homework')#11251
 Base = declarative_base()
 
 class STUDENT(Base):
