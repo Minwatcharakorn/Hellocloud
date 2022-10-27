@@ -9,10 +9,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///'+ os.path.join(basedir, 'db.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.app_context().push()
+
 db = SQLAlchemy(app)
 
 ma = Marshmallow(app)
 
+# Create a Product
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
@@ -34,6 +37,6 @@ product_schema = ProductSchema()
 products_schema = ProductSchema(many=True)
 
 db.create_all()
-
+# Run Server
 if __name__=='__main__':
     app.run(debug=True)
