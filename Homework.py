@@ -1,167 +1,85 @@
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import CHAR, VARCHAR, Column, Integer, ForeignKey
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, ForeignKey, String
+from sqlalchemy.orm import sessionmaker , relationship , backref
 
 
 
-engine = sqlalchemy.create_engine('sqlite:///Homework.sqlite3')
+engine = sqlalchemy.create_engine('postgresql://webadmin:ONDcqt19301@node37013-watcharakorn.proen.app.ruk-com.cloud:5432/homework')#11251
 Base = declarative_base()
 
-class Registration_table(Base):
-    __tablename__ = "Registration"
-    student_id = Column(CHAR(13),ForeignKey('Students.student_id'), nullable=False)
-    subject_id = Column(VARCHAR(15), ForeignKey('Subject.subject_id'), nullable=False)
-    year = Column(CHAR(4), nullable=False)
-    semester = Column(CHAR(1), nullable=False)
-    grade = Column(CHAR(2), primary_key=True)
-    
+class STUDENT(Base):
+        __tablename__ = 'students'
+        student_id = Column(String(13), primary_key = True ,nullable=True)
+        f_name = Column(String(30),nullable=True)
+        l_name = Column(String(30),nullable=True)
+        e_mail = Column(String(50),nullable=True)
 
-class Subject_table(Base):
-    __tablename__ = "Subject"
-    subject_id = Column(VARCHAR(15), primary_key=True, nullable=False)
-    subject_name = Column(VARCHAR(50), nullable=False)
-    cradit = Column(Integer, nullable=False)
-    teacher_id = Column(CHAR(3))
+        def __repr__(self) :
+                return '<User(student_id = {} , f_name = {} , l_name = {} , e_mail = {})>'.format(self.student_id,self.f_name,self.l_name,self.e_mail)
 
-class Students_table(Base):
-    __tablename__ = 'Students'
-    student_id = Column(CHAR(13),primary_key=True, nullable=False)
-    f_name = Column(VARCHAR(30), nullable=False)
-    l_name = Column(VARCHAR(30), nullable=False)
-    e_mail = Column(VARCHAR(50),nullable=False)
+class REGISTRATION(Base):
+        __tablename__ = "registrations"
+        id = Column(Integer, primary_key=True, nullable=True)
+        student_id = Column(String(13), nullable=True)
+        subject_id = Column(String(15), nullable=True)
+        year = Column(String(4), nullable=True)
+        semester = Column(String(1), nullable=True)
+        grade = Column(String(2), nullable=True)
+        
+        def __repr__(self):
+                return '<User(student_id = {} , subject_id = {} , year = {} , semester = {} , grade = {})>'.format(self.student_id,\
+                        self.subject_id, self.year , self.semester , self.grade)
+
+class SUBJECT(Base):
+        __tablename__ = 'subjects'
+        subject_id = Column(String(15),primary_key=True, nullable=True)
+        subject_name = Column(String(50), nullable=True)
+        creadit = Column(Integer, nullable=True)
+        teacher_id = Column(String(3), nullable=True)
 
 
-class Teachers_table(Base):
-    __tablename__ = "Teachers"
-    teacher_id = Column(CHAR(3), primary_key=True, nullable=False)
-    f_name = Column(VARCHAR(30), nullable=False)
-    l_name = Column(VARCHAR(30), nullable=False)
-    e_mail = Column(VARCHAR(50),nullable=False)
+        def __repr__(self):
+                return '<User(subject_id = {} , subject_name= {} , creadit = {} , teacher_id = {})>'.format(self.subject_id,\
+                        self.subject_name, self.creadit , self.teacher_id)
 
+class TEACHER(Base):
+        __tablename__ = 'teachers'
+        teacher_id = Column(String(3),primary_key=True, nullable=True)
+        teacher_f_name = Column(String(50), nullable=True)
+        teacher_l_name = Column(String(30), nullable=True)
+        teacher_e_mail = Column(String(50), nullable=True)
 
+        def __repr__(self):
+                return '<User(teacher_id = {} , teacher_f_name= {} , teacher_l_name = {} , teacher_e_mail = {})>'.format(self.teacher_id,\
+                        self.teacher_f_name, self.teacher_l_name , self.teacher_e_mail)
+
+Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 session = Session()
 
-Students_all_1 = Students_table(student_id="6406022620053", 
-                f_name="Watcharakorn",
-                l_name="Yentaweesub", 
-                e_mail="s6406022620053@email.kmutnb.ac.th")
+Student_1 = STUDENT(student_id='6406022620053',f_name='Watcharakorn',l_name='Yentaweesub',e_mail='s6406022620053@email.kmutnb.ac.th')
+Student_2 = STUDENT(student_id='6406022610023',f_name='Nititat',l_name='Bangpra',e_mail='s6406022610023@email.kmutnb.ac.th')
+Student_3 = STUDENT(student_id='6406022020037',f_name='Bunnapon',l_name='Takumwan',e_mail='s6406022620037@email.kmutnb.ac.th')
 
-Students_all_2 = Students_table(student_id="6406022610023", 
-                f_name="Nititat", 
-                l_name="Bangpra", 
-                e_mail="s6406022610023@email.kmutnb.ac.th")
+Registration_1 = REGISTRATION(student_id='6406022620053',subject_id='060233113',year='2565',semester='1',grade='B+')
+Registration_2 = REGISTRATION(student_id='6406022620053',subject_id='060233205',year='2565',semester='1',grade='A')
+Registration_3 = REGISTRATION(student_id='6406022610023',subject_id='060233113',year='2565',semester='1',grade='C')
+Registration_4 = REGISTRATION(student_id='6406022610023',subject_id='060233201',year='2565',semester='1',grade='B+')
+Registration_5 = REGISTRATION(student_id='6406022020037',subject_id='060233201',year='2565',semester='1',grade='A')
+Registration_6 = REGISTRATION(student_id='6406022020037',subject_id='060233205',year='2565',semester='1',grade='B')
 
-Students_all_3 = Students_table(student_id="6406022620037", 
-                f_name="Bunnapon",  
-                l_name="Takamwan", 
-                e_mail="s6406022620037@email.kmutnb.ac.th")
+Subject_1 = SUBJECT(subject_id='060233113',subject_name='ADVANCED COMPUTER PROGRAMMING',creadit=3,teacher_id='AMK')
+Subject_2 = SUBJECT(subject_id='060233205',subject_name='ADVANCED NETWORK AND PROTOCOL',creadit=3,teacher_id='KNM')
+Subject_3 = SUBJECT(subject_id='060233201',subject_name='NETWORK ENGINEERING LABORATORY',creadit=1,teacher_id='WKN')
 
+Teacher_1 = TEACHER(teacher_id='AMK',teacher_f_name='Anirach',teacher_l_name='Mingkhwan',teacher_e_mail='Anirach@gmail.com')
+Teacher_2 = TEACHER(teacher_id='KNM',teacher_f_name='Khanista',teacher_l_name='Namee',teacher_e_mail='Khanista@gmail.com')
+Teacher_3 = TEACHER(teacher_id='WKN',teacher_f_name='Watcharachai',teacher_l_name='Kongsiriwattana',teacher_e_mail='Watcharachai@gmail.com')
 
-
-Teachers_table_1 = Teachers_table(teacher_id="AMK",
-                f_name="Anirach", 
-                l_name="Mingkhwan", 
-                e_mail="Anirach@email.kmutnb.ac.th")
-
-Teachers_table_2 = Teachers_table(teacher_id="WKN",
-                f_name="Watcherachai", 
-                l_name="Kongsiriwattana", 
-                e_mail="Watcherachai@email.kmutnb.ac.th")
-
-Teachers_table_3 = Teachers_table(teacher_id="KNM",
-                f_name="Chanitha", 
-                l_name="Namee", 
-                e_mail="Chanitha@email.kmutnb.ac.th")
-
-
-
-Subject_table_1 = Subject_table(subject_id="060233112", 
-                subject_name="DATA ENGINEERING", 
-                cradit="3", 
-                teacher_id="WKN")
-
-Subject_table_2 = Subject_table(subject_id="060233113", 
-                subject_name="ADVANCED COMPUTER PROGRAMMIN", 
-                cradit="3", 
-                teacher_id="AMK")
-
-Subject_table_3 = Subject_table(subject_id="060233205", 
-                subject_name="ADVANCED NETWORK AND PROTOCO", 
-                cradit="3", 
-                teacher_id="KNM")
-
-
-
-Registration_table_1 = Registration_table(student_id="6406022620053", 
-                subject_id="060233112", 
-                year="2565", semester="2", 
-                grade="A+")
-
-Registration_table_2 = Registration_table(student_id="6406022620053", 
-                subject_id="060233113", 
-                year="2565", 
-                semester="2", 
-                grade="A")
-
-Registration_table_3 = Registration_table(student_id="6406022620053", 
-                subject_id="060233205", 
-                year="2565", 
-                semester="2", 
-                grade="B+",)
-
-Registration_table_4 = Registration_table(student_id="6406022610023", 
-                subject_id="060233112", 
-                year="2565", 
-                semester="2", 
-                grade="B")
-
-Registration_table_5 = Registration_table(student_id="6406022610023", 
-                subject_id="060233113", 
-                year="2565", 
-                semester="2", 
-                grade="C+")
-
-Registration_table_6 = Registration_table(student_id="6406022610023", 
-                subject_id="060233205", 
-                year="2565", 
-                semester="2", 
-                grade="C")
-
-Registration_table_7 = Registration_table(student_id="6406022620037", 
-                subject_id="060233112", 
-                year="2565", 
-                semester="2", 
-                grade="D+")
-
-Registration_table_8 = Registration_table(student_id="6406022620037", 
-                subject_id="060233113", 
-                year="2565", 
-                semester="2", 
-                grade="D")
-
-Registration_table_9 = Registration_table(student_id="6406022620037", 
-                subject_id="060233205", 
-                year="2565", 
-                semester="2", 
-                grade="F")
-
-session.add_all([Students_all_1,Students_all_2,Students_all_3])
-
-
-session.add_all([Teachers_table_1,Teachers_table_2,Teachers_table_3])
-
-
-session.add_all([Subject_table_1,Subject_table_2,Subject_table_3])
-
-
-session.add_all([Registration_table_1,Registration_table_2,Registration_table_3,
-                Registration_table_4,Registration_table_5,Registration_table_6,
-                Registration_table_7,Registration_table_8,Registration_table_9])
-
-
+session.add_all([Student_1,Student_2,Student_3,Registration_1,Registration_2,Registration_3,Registration_4,Registration_5,Registration_6,\
+        Subject_1,Subject_2,Subject_3,Teacher_1,Teacher_2,Teacher_3])
+print(session.query(STUDENT).all())
 session.commit()
-

@@ -5,32 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Work</title>
+
 </head>
 <body>
     <h2><center>Home Work</center></h2>
     <table border="1" width="100%" align="center">
-        <tr>
-            <th>student-id</th>
-            <th>student-f_name</th>
-            <th>student-l_name</th>
-            <th>subject-id</th>
-            <th>subject-name</th>
-            <th>grade</th>
-            <th>teacher-f_name</th>
-            <th>teacher-l_name</th>
-        </tr>
-        {% for row in test %}
-        <tr>
-          <td>{{ row[0] }}</td>
-          <td>{{ row[1] }}</td>
-          <td>{{ row[2] }}</td>
-          <td>{{ row[3] }}</td>
-          <td>{{ row[4] }}</td>
-          <td>{{ row[5] }}</td>
-          <td>{{ row[6] }}</td>
-          <td>{{ row[7] }}</td>
-        </tr>
-      {% endfor %}
+        <thead>
+          <tr class="active-row">
+            <th>Student_ID</th>
+            <th>Student_F_Name</th>
+            <th>Student_L_Name</th>
+            <th>E_mail</th>
+            <th>Subject_ID</th>
+            <th>Subject_Name</th>
+            <th>Grade</th>
+            <th>Teacher_F_name</th>
+            <th>Teacher_L_name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in TEST %}
+            <tr>
+              <td>{{ i.student_id }}</td>
+              <td>{{ i.f_name }}</td>
+              <td>{{ i.l_name }}</td>
+              <td>{{ i.e_mail }}</td>
+              <td>{{ i.subject_id }}</td>
+              <td>{{ i.subject_name }}</td>
+              <td>{{ i.grade }}</td>
+              <td>{{ i.teacher_f_name }}</td>
+              <td>{{ i.teacher_l_name }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
       </table>
 </body>
 </html>
